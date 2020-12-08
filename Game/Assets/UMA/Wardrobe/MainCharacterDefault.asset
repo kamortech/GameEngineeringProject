@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0188188c253e0c4bb9b46e19fa7312e, type: 3}
+  m_Name: MainCharacterDefault
+  m_EditorClassIdentifier: 
+  label: 
+  resourcesOnly: 0
+  recipeType: Wardrobe
+  DisplayValue: ChestForMainCharacter1
+  compatibleRaces:
+  - HumanMale
+  - HumanMaleDCS
+  wardrobeRecipeThumbs:
+  - race: HumanMale
+    filename: 
+    thumb: {fileID: 0}
+  - race: HumanMaleDCS
+    filename: 
+    thumb: {fileID: 0}
+  wardrobeSlot: Chest
+  Hides:
+  - MaleTorso
+  - MaleFeet
+  - MaleLegs
+  HideTags: []
+  suppressWardrobeSlots: []
+  activeWardrobeSet: []
+  MeshHideAssets: []
+  recipeString: '{"version":3,"packedSlotDataList":[],"slotsV2":[],"slotsV3":[{"id":"","scale":1,"copyIdx":-1,"overlays":[]},{"id":"","scale":1,"copyIdx":-1,"overlays":[]},{"id":"MaleHoodie","scale":100,"copyIdx":-1,"overlays":[{"id":"MaleHoodie_Overlay","colorIdx":0,"rect":[0.0,0.0,0.0,0.0]}]},{"id":"MaleJeans01","scale":100,"copyIdx":-1,"overlays":[{"id":"MaleJeans01","colorIdx":1,"rect":[0.0,0.0,0.0,0.0]}]},{"id":"","scale":1,"copyIdx":-1,"overlays":[]},{"id":"","scale":1,"copyIdx":-1,"overlays":[]},{"id":"","scale":1,"copyIdx":-1,"overlays":[]},{"id":"","scale":1,"copyIdx":-1,"overlays":[]},{"id":"TallShoes","scale":100,"copyIdx":-1,"overlays":[{"id":"TallShoes_Black","colorIdx":2,"rect":[0.0,0.0,0.0,0.0]}]},{"id":"","scale":1,"copyIdx":-1,"overlays":[]},{"id":"M_Eyebrow","scale":100,"copyIdx":-1,"overlays":[{"id":"M_Eyebrow","colorIdx":3,"rect":[0.0,0.0,0.0,0.0]}]},{"id":"","scale":1,"copyIdx":-1,"overlays":[]},{"id":"MaleHair1","scale":100,"copyIdx":-1,"overlays":[{"id":"MaleHairSlick01_Overlay","colorIdx":4,"rect":[0.0,0.0,0.0,0.0]}]}],"colors":[],"fColors":[{"name":"-","colors":[161,161,161,255,96,96,96,0,255,255,255,255,0,0,0,0,255,255,255,255,0,0,0,0]},{"name":"-","colors":[70,95,129,255,0,0,0,0,255,255,255,255,0,0,0,0,255,255,255,255,0,0,0,0]},{"name":"-","colors":[255,255,255,255,0,0,0,0,255,255,255,255,0,0,0,0,255,255,255,255,0,0,0,0]},{"name":"-","colors":[0,0,0,255,0,0,0,0,255,255,255,255,0,0,0,0,255,255,255,255,0,0,0,0]},{"name":"","colors":[0,0,0,255,0,0,0,0,255,255,255,255,0,0,0,0]}],"sharedColorCount":0,"race":"","packedDna":[]}'
+  IncompatibleRecipes: []
+  UserField: 
+  replaces: Nothing
