@@ -11,6 +11,8 @@ public class DialogueManager : MonoBehaviour
     private int currentOption;
     private int maxOption;
     private Transform pointer;
+    private GameObject subtitlesPanel;
+    private GameObject subtitles;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +22,8 @@ public class DialogueManager : MonoBehaviour
         maxOption = 0;
 
         pointer = canvas.transform.GetChild(0).gameObject.transform.GetChild(8);
+        subtitlesPanel = canvas.transform.GetChild(1).gameObject;
+        subtitles = subtitlesPanel.transform.GetChild(0).gameObject;
     }
 
     // Update is called once per frame
@@ -53,6 +57,21 @@ public class DialogueManager : MonoBehaviour
         pointer.position += new Vector3(0, -40.0f, 0);
     }
 
+    public void activateSubtitles()
+    {
+        subtitlesPanel.active = true;
+    }
+
+    public void deactivateSubtitles()
+    {
+        subtitlesPanel.active = false;
+    }
+
+    public void sendSubtitle(string txt)
+    {
+        subtitles.GetComponent<Text>().text = txt;
+    }
+
     public int getDecision()
     {
         return currentOption;
@@ -67,14 +86,16 @@ public class DialogueManager : MonoBehaviour
     {
         dialogueActive = true;
         canvas.transform.GetChild(0).gameObject.active = true;
-        player.GetComponent<UnityTemplateProjects.SimpleCameraController>().enabled = false;
+        player.GetComponent<FirstPersonAIO>().enableCameraMovement = false;
+        player.GetComponent<FirstPersonAIO>().playerCanMove = false;
     }
 
     public void deactivateDialogue()
     {
         dialogueActive = false;
         canvas.transform.GetChild(0).gameObject.active = false;
-        player.GetComponent<UnityTemplateProjects.SimpleCameraController>().enabled = true;
+        player.GetComponent<FirstPersonAIO>().enableCameraMovement = true;
+        player.GetComponent<FirstPersonAIO>().playerCanMove = true;
 
         currentOption = 0;
         maxOption = 0;

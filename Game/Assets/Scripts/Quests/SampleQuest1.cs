@@ -9,9 +9,9 @@ public class SampleQuest1 : MonoBehaviour
     public GameObject questFinishObject;
     public GameObject dialogueManager;
 
-    float distX;
-    float distY;
-    float distZ;
+    float distX = 500.0f;
+    float distY = 500.0f;
+    float distZ = 500.0f;
 
     float distX_starter;
     float distY_starter;
@@ -62,7 +62,7 @@ public class SampleQuest1 : MonoBehaviour
         qp.isQuestSuccess = false;
         qp.isQuestFailure = false;
 
-        interactionDistance = 1.0f;
+        interactionDistance = 2.0f;
         goneAwayFromEmployer = false;
         wentToFinishingObject = false;
 
@@ -73,6 +73,13 @@ public class SampleQuest1 : MonoBehaviour
 
         //we will need to declare specific number of dialogue sequences during this quest
         dialogueSequences = new bool[10];
+    }
+
+    IEnumerator waitCoroutine(int s)
+    {
+        yield return new WaitForSeconds(s);
+
+        dialogueManager.GetComponent<DialogueManager>().deactivateSubtitles();
     }
 
     // Update is called once per frame
@@ -88,11 +95,14 @@ public class SampleQuest1 : MonoBehaviour
                     distY = Mathf.Abs(player.transform.position.y - questActivationObject.transform.position.y);
                     distZ = Mathf.Abs(player.transform.position.z - questActivationObject.transform.position.z);
 
+
                     if ((distX < interactionDistance) && (distY < interactionDistance) && (distZ < interactionDistance))
                     {
                         qp.isQuestActive = true;
-
                         Debug.Log("Quest Activated");
+
+                        dialogueManager.GetComponent<DialogueManager>().activateSubtitles();
+                        dialogueManager.GetComponent<DialogueManager>().sendSubtitle("Welcome, stranger. I think even such a noob like you can do something for me. Besides, what the hell are you doing at this land?");
 
                         //activating dialogue
                         dialogueManager.GetComponent<DialogueManager>().activateDialogue();
@@ -118,15 +128,15 @@ public class SampleQuest1 : MonoBehaviour
                         if (lastDecision == 1)
                         {
                             dialogueSequences[1] = false;
-                            Debug.Log("I am very dissapointed with your attitude. I will not give You any job anymore.");//here instead of Debug.Log should be coorutine for handling response monologue of interlocutor(person, wchich we are just talkink to)
-                            dialogueManager.GetComponent<DialogueManager>().deactivateDialogue();
+                            dialogueManager.GetComponent<DialogueManager>().sendSubtitle("I am very dissapointed with your attitude. I will not give You any job anymore.");//here instead of Debug.Log should be coorutine for handling response monologue of interlocutor(person, wchich we are just talkink to)
                         }
                         else if (lastDecision == 0)
                         {
                             dialogueSequences[1] = true;
-                            Debug.Log("OK, If You find a guy who ownes me some money, please tell him that Big Beard is sending regards.");//here instead of Debug.Log should be coorutine for handling response monologue of interlocutor(person, wchich we are just talkink to)
+                            dialogueManager.GetComponent<DialogueManager>().sendSubtitle("OK, If You find a guy who ownes me some money, please tell him that Big Beard is sending regards.");//here instead of Debug.Log should be coorutine for handling response monologue of interlocutor(person, wchich we are just talkink to)
                         }
 
+                        StartCoroutine(waitCoroutine(5));
                     }
                 }
 
@@ -150,12 +160,18 @@ public class SampleQuest1 : MonoBehaviour
                     {
                         goneAwayFromEmployer = true;
                         Debug.Log("I went away from employer");
+
+                        dialogueManager.GetComponent<DialogueManager>().deactivateSubtitles();//
+                        dialogueManager.GetComponent<DialogueManager>().deactivateDialogue();//This all should be with coorutine while listening to MPC's monologue
                     }
 
 
                     if ((distX_finisher < interactionDistance) && (distY_finisher < interactionDistance) && (distZ_finisher < interactionDistance))
                     {
                         wentToFinishingObject = true;
+
+                        dialogueManager.GetComponent<DialogueManager>().activateSubtitles();
+                        dialogueManager.GetComponent<DialogueManager>().sendSubtitle("What do you want, stranger?");
 
                         //activating dialogue
                         dialogueManager.GetComponent<DialogueManager>().activateDialogue();
@@ -182,14 +198,30 @@ public class SampleQuest1 : MonoBehaviour
                         if (lastDecision == 0)
                         {
                             dialogueSequences[3] = true;
-                            Debug.Log("OK, here You have his artefact. I don' need it anymore.");//here instead of Debug.Log should be coorutine for handling response monologue of interlocutor(person, wchich we are just talkink to)
+                            dialogueManager.GetComponent<DialogueManager>().sendSubtitle("OK, here You have his artefact. I don' need it anymore.");//here instead of Debug.Log should be coorutine for handling response monologue of interlocutor(person, wchich we are just talkink to)
+
+                            //ending dialogue
                             dialogueManager.GetComponent<DialogueManager>().deactivateDialogue();
+
+                            //clearing all dialogue options
+                            dialogueManager.GetComponent<DialogueManager>().clearDialogueOptions();
+
+                            StartCoroutine(waitCoroutine(5));
+
+                            //dialogueManager.GetComponent<DialogueManager>().deactivateDialogue();
                         }
                         else if (lastDecision == 1)
                         {
                             dialogueSequences[3] = true;
-                            Debug.Log("OK, here You have his artefact. I don' need it anymore.");//here instead of Debug.Log should be coorutine for handling response monologue of interlocutor(person, wchich we are just talkink to)
-                            Debug.Log("But, you were very rude to me, so I will remember that.");//and there sould come some reputation mark--
+                            dialogueManager.GetComponent<DialogueManager>().sendSubtitle("OK, here You have his artefact. I don' need it anymore. But, you were very rude to me, so I will remember that.");//here instead of Debug.Log should be coorutine for handling response monologue of interlocutor(person, wchich we are just talkink to) //and there sould come some reputation mark--
+
+                            //ending dialogue
+                            dialogueManager.GetComponent<DialogueManager>().deactivateDialogue();
+
+                            //clearing all dialogue options
+                            dialogueManager.GetComponent<DialogueManager>().clearDialogueOptions();
+
+                            StartCoroutine(waitCoroutine(8));
                         }
 
                         //ending dialogue
@@ -197,6 +229,8 @@ public class SampleQuest1 : MonoBehaviour
 
                         //clearing all dialogue options
                         dialogueManager.GetComponent<DialogueManager>().clearDialogueOptions();
+
+                       // dialogueManager.GetComponent<DialogueManager>().deactivateSubtitles();
                     }
                 }
 
@@ -212,7 +246,16 @@ public class SampleQuest1 : MonoBehaviour
 
                     if ((distX_starter < interactionDistance) && (distY_starter < interactionDistance) && (distZ_starter < interactionDistance))
                     {
+                        dialogueManager.GetComponent<DialogueManager>().activateSubtitles();
+
+                        dialogueManager.GetComponent<DialogueManager>().sendSubtitle("Good Job! Here's your reward.");
+
                         Debug.Log("Good Job! Here's your reward.");
+
+                        dialogueManager.GetComponent<DialogueManager>().deactivateDialogue();
+
+                        StartCoroutine(waitCoroutine(5));
+
                         //here should come some income for propper quest ending
                     }
 
