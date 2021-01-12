@@ -5,14 +5,17 @@ using UnityEngine;
 public class CameraShooter : MonoBehaviour
 {
     public float range = 50.0f;
-    public float dmg = 20.0f;
+    public int dmg = 20;
     public Camera playerCam;
-
+    public float accurecy = 90.0f;
+    private float offset;
+    float rX;
+    float rY;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        offset = (100.0f - accurecy) * 0.001f;
     }
 
     // Update is called once per frame
@@ -21,10 +24,22 @@ public class CameraShooter : MonoBehaviour
         if (Input.GetButtonDown("Fire1"))
         {
             RaycastHit hit;
+            rX = Random.Range(-offset, offset);
+            rY = Random.Range(-offset, offset);
 
-            if (Physics.Raycast(playerCam.transform.position, playerCam.transform.forward, out hit, range))
+            if (Physics.Raycast(playerCam.transform.position, playerCam.transform.forward + new Vector3(rX, rY, 0.0f), out hit, range))
             {
                 Debug.Log(hit.transform.name);//here should be method which will be giving damage to object that player is shooting
+
+                if(hit.transform.CompareTag("NPC_indie") || hit.transform.CompareTag("NPC_nomad") || hit.transform.CompareTag("NPC_panther") || hit.transform.CompareTag("NPC_townie"))
+                {
+                    Debug.Log("Thats's NPC!!!!");
+                    hit.transform.gameObject.GetComponent<CharacterStats>().takeDamage(dmg);
+                }
+                else if(hit.transform.CompareTag("Destroyable"))
+                {
+                    Destroy(hit.transform.gameObject);
+                }
             }
         }
     }
